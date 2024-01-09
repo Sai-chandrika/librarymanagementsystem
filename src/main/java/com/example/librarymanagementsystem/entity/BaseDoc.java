@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystem.dto;
+package com.example.librarymanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;
