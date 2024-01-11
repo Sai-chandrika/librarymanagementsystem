@@ -1,5 +1,6 @@
 package com.example.librarymanagementsystem.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,11 @@ public class Library extends BaseDoc {
 
     private String name;
     private String location;
+
+    @Column(unique = true)
+    private String email;
+
+    @Column(unique = true)
     private String adminEmail;
 
 }

@@ -17,8 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -72,10 +70,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             logger.info("authenticated user "+userName+ ", setting security context");
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            LocalDateTime tokenTime = DynamicTokenStore.tokenCreationTime;
-            if (tokenTime.plusMinutes((long) tokenExpirationTime-thresholdExpirationTime).isBefore(LocalDateTime.now())){
-                response.setHeader("Authorization",jwtTokenUtils.getToken(appUser));
-            }
+//            LocalDateTime tokenTime = DynamicTokenStore.tokenCreationTime;
+//            if (tokenTime.plusMinutes((long) tokenExpirationTime-thresholdExpirationTime).isBefore(LocalDateTime.now())){
+//                response.setHeader("Authorization",jwtTokenUtils.getToken(appUser));
+//            }
             filterChain.doFilter(request,response);
 
         } catch (Exception e) {
@@ -93,7 +91,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public void generateUnauthorisedAccess(HttpServletResponse res) throws IOException {
         ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-        GenericResponse response = new GenericResponse(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORZATION");
+        GenericResponse response = new GenericResponse(HttpStatus.UNAUTHORIZED.value(), "UNAUTHORIZATION");
         String jsonResString = ow.writeValueAsString(response);
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
         PrintWriter writer = res.getWriter();

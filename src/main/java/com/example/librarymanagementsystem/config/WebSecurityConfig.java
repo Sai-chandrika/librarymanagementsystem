@@ -1,12 +1,10 @@
 package com.example.librarymanagementsystem.config;
 
-import com.example.librarymanagementsystem.customexception.AccessDeniedException;
 import com.example.librarymanagementsystem.repo.AppUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.method.P;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,6 +40,11 @@ public class WebSecurityConfig {
     private Integer tokenExpirationTime;
 
     private final String[] PUBLIC_RESOURCE_AND_URL={"/",
+            "api/v1/appuser/save",
+            "api/v1/appuser/delete/{id}",
+            "api/v1/appuser/get-all",
+            "api/v1/appuser/sign-in",
+            "api/v1/appuser/get-all-admin",
 
             "/v3/api-docs",
             "/swagger-resources/**",
@@ -72,6 +75,6 @@ public class WebSecurityConfig {
         }
     @Bean
     public AccessDeniedHandler accessDeniedHandler(){
-        return new CustomAccessDenieHandler();
+        return new CustomAccessDeniedHandler();
     }
 }

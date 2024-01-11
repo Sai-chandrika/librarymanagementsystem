@@ -95,7 +95,7 @@ public class JwtTokenUtils {
             case "CONTACTNUMBER" ->
                 userName = (String) claims.getClaim("contactNumber");
          }
-            DynamicTokenStore.tokenCreationTime = LocalDateTime.parse((String)claims.getClaim("createdOn"));
+           // DynamicTokenStore.tokenCreationTime = LocalDateTime.parse((String)claims.getClaim("createdOn"));
          return userName;
     }
 }

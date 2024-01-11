@@ -1,6 +1,7 @@
 package com.example.librarymanagementsystem.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
@@ -8,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -21,16 +23,17 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Setter
 @Getter
+@EntityListeners(AuditingEntityListener.class)
 public class BaseDoc {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     private String id;
+
     @CreationTimestamp
     @JsonIgnore
-    private Timestamp createdOn;
-    private LocalDateTime updatedOn;
-    private String createdBy;
-    private String updatedBy;
+    private Timestamp createdOn =Timestamp.valueOf(LocalDateTime.now());
+
+    private LocalDateTime updatedOn = LocalDateTime.now();
     private boolean isActive = Boolean.TRUE;
 }

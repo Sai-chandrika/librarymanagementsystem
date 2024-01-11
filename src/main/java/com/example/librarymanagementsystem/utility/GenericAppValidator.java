@@ -1,5 +1,7 @@
 package com.example.librarymanagementsystem.utility;
 
+import com.example.librarymanagementsystem.customexception.DataMisMatchException;
+
 /**
  * @Author ➤➤➤ PavaniBv
  * @Date ➤➤➤ 09/01/24
@@ -28,7 +30,6 @@ public class GenericAppValidator {
 
         for (char c:contact.toCharArray()){
             if (Character.isDigit(c) || c == '+' || c == '-') {
-                return true;
             }
             else return false;
         }
@@ -37,7 +38,7 @@ public class GenericAppValidator {
 
     public static Boolean isValidEmail(String email){
         if (email.matches(".*[A-Z].*")){
-            throw new RuntimeException("Email should not contain uppercase characters");
+            throw new DataMisMatchException("Email should not contain uppercase characters");
         }
         if (email.contains("@") && (email.endsWith(".com") || email.endsWith(".net"))){
             return true;
@@ -52,7 +53,7 @@ public class GenericAppValidator {
                 password.matches(".*[a-z].*") &&
                 password.matches(".*[^a-zA-z0-9].*")&&
                 password.length()>=8))
-            throw new RuntimeException("Password must contain at least one numeric ,one special, one uppercase, one lowercase and one digit and length should greater than 8 ");
+            throw new DataMisMatchException("Password must contain at least one numeric ,one special, one uppercase, one lowercase and one digit and length should greater than 8 ");
         return true;
     }
 }
