@@ -1,9 +1,7 @@
 package com.example.librarymanagementsystem.service.impl;
 
 import com.example.librarymanagementsystem.constant.RoleType;
-import com.example.librarymanagementsystem.customexception.AlreadyExistsException;
-import com.example.librarymanagementsystem.customexception.DataMisMatchException;
-import com.example.librarymanagementsystem.customexception.InvalidDataException;
+import com.example.librarymanagementsystem.customexception.*;
 import com.example.librarymanagementsystem.dto.GenericResponse;
 import com.example.librarymanagementsystem.dto.LibraryRequestDto;
 import com.example.librarymanagementsystem.dto.LibraryResponseDto;
@@ -16,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author ➤➤➤ PavaniBv
@@ -64,4 +65,40 @@ public class LibraryServiceImpl implements LibraryService {
         return response;
     }
 
+    @Override
+    public GenericResponse deleteLibrary(String id){
+        AppUser authenticator = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Library library = libraryRepo.findById(id).orElseThrow(()-> new NotFoundException("Library Not found"));
+        if (!library.getAdminEmail().equals(authenticator.getEmail()))
+            throw new AccessDeniedException("Access denied for another admin");
+        library.setActive(!library.isActive());
+        libraryRepo.save(library);
+        return new GenericResponse(HttpStatus.OK.value(), " successfully");
+    }
+
+    @Override
+    public GenericResponse update(LibraryRequestDto request){
+        AppUser authenticator = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Library library = libraryRepo.findById(request.getId()).orElseThrow(()-> new NotFoundException("Library Not found"));
+        if (!library.getAdminEmail().equals(authenticator.getEmail()))
+            throw new AccessDeniedException("Access denied for another admin to update");
+        if (request.getName()!=null){
+            library.setName(request.getName());
+        }
+        if (request.getEmail()!=null){
+            library.setEmail(request.getEmail());
+        }
+        if (request.getLocation()!=null){
+            library.setLocation(request.getLocation());
+        }
+        libraryRepo.save(library);
+        return new GenericResponse("Library data updated successfully",HttpStatus.OK.value(),libraryResponse(library));
+    }
+
+
+    @Override
+    public GenericResponse getAll(){
+        List<Library> libraryList = libraryRepo.findAll().stream().filter(e-> Boolean.TRUE.equals(e.isActive())).collect(Collectors.toList());
+        return new GenericResponse(HttpStatus.OK.value(),libraryList.stream().map(this::libraryResponse).collect(Collectors.toList()));
+    }
 }

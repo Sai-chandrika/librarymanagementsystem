@@ -14,6 +14,7 @@ import lombok.Setter;
 @Setter
 public class LibraryRequestDto {
 
+    private String id;
     private String name;
     private String location;
     private String email;

@@ -108,13 +108,17 @@ public class AppUserServiceImpl implements AppUserService {
 
     @Override
     public GenericResponse delete(String id){
+        AppUser authenticator = (AppUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         AppUser appuser = appUserRepo.findById(id).orElseThrow(()-> new NotFoundException("user not found"));
-        if (Boolean.FALSE.equals(appuser.isActive())){
-            throw new  DataMisMatchException("User not activated");
-        }
-        if (Boolean.TRUE.equals(appuser.isActive())){
-            appuser.setActive(Boolean.FALSE);
-        }
+        if (!authenticator.getId().equals(appuser.getId()))
+            throw new InvalidDataException("Other user can't de-active another one");
+//        if (Boolean.FALSE.equals(appuser.isActive())){
+//            throw new  DataMisMatchException("User not activated");
+//        }
+//        if (Boolean.TRUE.equals(appuser.isActive())){
+//            appuser.setActive(Boolean.FALSE);
+//        }
+        appuser.setActive(!appuser.isActive());
         appUserRepo.save(appuser);
         return new GenericResponse(HttpStatus.OK.value(),"Appuser deleted successfully");
     }

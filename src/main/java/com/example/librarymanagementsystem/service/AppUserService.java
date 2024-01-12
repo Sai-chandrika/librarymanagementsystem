@@ -17,8 +17,6 @@ public interface AppUserService {
 
     GenericResponse update(AppuserDto request);
 
-
-
     GenericResponse delete(String id);
 
     GenericResponse getAll();

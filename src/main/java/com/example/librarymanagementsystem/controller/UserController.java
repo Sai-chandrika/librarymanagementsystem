@@ -35,6 +35,7 @@ public class UserController {
     }
 
     @PutMapping("/delete/{id}")
+    @PreAuthorize(("hasAnyAuthority('ADMIN','USER')"))
     public GenericResponse delete(@PathVariable String id) {
         return appUserService.delete(id);
     }

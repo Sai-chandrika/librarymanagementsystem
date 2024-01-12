@@ -12,4 +12,9 @@ import com.example.librarymanagementsystem.dto.LibraryRequestDto;
 public interface LibraryService {
     GenericResponse saveLibrary(LibraryRequestDto request);
 
+    GenericResponse deleteLibrary(String id);
+
+    GenericResponse update(LibraryRequestDto request);
+
+    GenericResponse getAll();
 }

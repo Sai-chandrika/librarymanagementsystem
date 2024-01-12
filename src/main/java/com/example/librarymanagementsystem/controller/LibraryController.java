@@ -2,15 +2,11 @@ package com.example.librarymanagementsystem.controller;
 
 import com.example.librarymanagementsystem.dto.GenericResponse;
 import com.example.librarymanagementsystem.dto.LibraryRequestDto;
-import com.example.librarymanagementsystem.entity.Library;
 import com.example.librarymanagementsystem.service.LibraryService;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Author ➤➤➤ PavaniBv
@@ -27,8 +23,25 @@ public class LibraryController {
 
 
     @PostMapping("/save")
-    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public GenericResponse saveLibrary(@RequestBody LibraryRequestDto request) {
         return libraryService.saveLibrary(request);
     }
+
+    @PutMapping("/delete/{id}")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public GenericResponse deleteLibrary(@PathVariable String id) {
+        return libraryService.deleteLibrary(id);
     }
+
+    @PutMapping("/update")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public GenericResponse update(@RequestBody LibraryRequestDto request) {
+        return libraryService.update(request);
+    }
+
+    @GetMapping("/get-all-libraries")
+    public GenericResponse getAll(){
+        return libraryService.getAll();
+    }
+}

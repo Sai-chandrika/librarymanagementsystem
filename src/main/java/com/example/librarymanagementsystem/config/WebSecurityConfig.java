@@ -41,10 +41,10 @@ public class WebSecurityConfig {
 
     private final String[] PUBLIC_RESOURCE_AND_URL={"/",
             "api/v1/appuser/save",
-            "api/v1/appuser/delete/{id}",
             "api/v1/appuser/get-all",
             "api/v1/appuser/sign-in",
             "api/v1/appuser/get-all-admin",
+            "api/v1/library/get-all-libraries",
 
             "/v3/api-docs",
             "/swagger-resources/**",
