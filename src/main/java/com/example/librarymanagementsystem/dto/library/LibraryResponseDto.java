@@ -1,4 +1,4 @@
-package com.example.librarymanagementsystem.dto;
+package com.example.librarymanagementsystem.dto.library;
 
 import lombok.Getter;
 import lombok.Setter;

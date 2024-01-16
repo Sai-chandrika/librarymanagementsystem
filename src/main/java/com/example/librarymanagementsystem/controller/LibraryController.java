@@ -1,9 +1,8 @@
 package com.example.librarymanagementsystem.controller;
 
 import com.example.librarymanagementsystem.dto.GenericResponse;
-import com.example.librarymanagementsystem.dto.LibraryRequestDto;
+import com.example.librarymanagementsystem.dto.library.LibraryRequestDto;
 import com.example.librarymanagementsystem.service.LibraryService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

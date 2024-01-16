@@ -1,11 +1,12 @@
 package com.example.librarymanagementsystem.controller;
 
-import com.example.librarymanagementsystem.dto.AppuserDto;
+import com.example.librarymanagementsystem.dto.ChangePassword;
+import com.example.librarymanagementsystem.dto.ForgotPassword;
 import com.example.librarymanagementsystem.dto.GenericResponse;
 import com.example.librarymanagementsystem.dto.LoginDto;
+import com.example.librarymanagementsystem.dto.appuser.AppuserDto;
 import com.example.librarymanagementsystem.service.AppUserService;
 import com.nimbusds.jose.JOSEException;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class UserController {
     private AppUserService appUserService;
 
     @PostMapping("/save")
-    public GenericResponse save(@RequestBody AppuserDto request){
+    public GenericResponse save(@RequestBody AppuserDto request) {
         return appUserService.saveAppUser(request);
     }
 
@@ -51,7 +52,28 @@ public class UserController {
     }
 
     @GetMapping("/get-all-admin")
-    public GenericResponse getAllAdmin(){
+    public GenericResponse getAllAdmin() {
         return appUserService.getAllAdmin();
     }
+
+    @PostMapping("/change-password")
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
+    public GenericResponse changePassword(ChangePassword password) {
+        return appUserService.changePassword(password);
     }
+
+    @PostMapping("/forgot-password")
+    public GenericResponse forgotPassword(ForgotPassword request) {
+        return appUserService.forgotPassword(request);
+    }
+
+    @PostMapping("/generate-otp")
+    public GenericResponse generateOtp(ForgotPassword forgotPassword){
+        return appUserService.generateOtp(forgotPassword);
+    }
+
+    @PostMapping("/validate-otp")
+    public GenericResponse validateOtp(ForgotPassword forgotPassword){
+        return appUserService.validateOtp(forgotPassword);
+    }
+}

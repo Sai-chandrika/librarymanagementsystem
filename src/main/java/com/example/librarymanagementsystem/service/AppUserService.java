@@ -1,6 +1,8 @@
 package com.example.librarymanagementsystem.service;
 
-import com.example.librarymanagementsystem.dto.AppuserDto;
+import com.example.librarymanagementsystem.dto.ChangePassword;
+import com.example.librarymanagementsystem.dto.ForgotPassword;
+import com.example.librarymanagementsystem.dto.appuser.AppuserDto;
 import com.example.librarymanagementsystem.dto.GenericResponse;
 import com.example.librarymanagementsystem.dto.LoginDto;
 import com.nimbusds.jose.JOSEException;
@@ -23,4 +25,12 @@ public interface AppUserService {
 
     GenericResponse signIn(LoginDto request) throws JOSEException;
     GenericResponse getAllAdmin();
+
+    GenericResponse changePassword(ChangePassword password);
+
+    GenericResponse forgotPassword(ForgotPassword request);
+
+    GenericResponse generateOtp(ForgotPassword forgotPassword);
+
+    GenericResponse validateOtp(ForgotPassword forgotPassword);
 }

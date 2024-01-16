@@ -45,6 +45,9 @@ public class WebSecurityConfig {
             "api/v1/appuser/sign-in",
             "api/v1/appuser/get-all-admin",
             "api/v1/library/get-all-libraries",
+            "api/v1/appuser/generate-otp",
+            "api/v1/appuser/validate-otp",
+            "api/v1/appuser/forgot-password",
 
             "/v3/api-docs",
             "/swagger-resources/**",

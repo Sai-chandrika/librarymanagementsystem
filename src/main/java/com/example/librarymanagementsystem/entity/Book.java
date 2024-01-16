@@ -25,7 +25,7 @@ public class Book extends BaseDoc{
 
     private String name;
     private String author;
-    private float price;
+    private Float price;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Library library;

@@ -1,7 +1,7 @@
 package com.example.librarymanagementsystem.service;
 
 import com.example.librarymanagementsystem.dto.GenericResponse;
-import com.example.librarymanagementsystem.dto.LibraryRequestDto;
+import com.example.librarymanagementsystem.dto.library.LibraryRequestDto;
 
 /**
  * @Author ➤➤➤ PavaniBv

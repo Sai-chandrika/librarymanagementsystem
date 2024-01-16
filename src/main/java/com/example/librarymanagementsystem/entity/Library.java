@@ -14,7 +14,7 @@ import lombok.Setter;
  * @since 09-01-2024
  */
 @Entity
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -29,4 +29,20 @@ public class Library extends BaseDoc {
     @Column(unique = true)
     private String adminEmail;
 
+    public Library(String name, String location, String email, String adminEmail) {
+        this.name = name;
+        this.location = location;
+        this.email = email;
+        this.adminEmail = adminEmail;
+    }
+
+    @Override
+    public String toString() {
+        return "Library{" +
+                "name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", email='" + email + '\'' +
+                ", adminEmail='" + adminEmail + '\'' +
+                '}';
+    }
 }
